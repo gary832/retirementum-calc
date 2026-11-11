@@ -1,0 +1,8 @@
+{
+  "file": "rm-payout-lookup-1.0.0.js",
+  "version": "1.0.0",
+  "integrity": "sha384-Qj76PS/1zjL2sSQjKMhgyu7zIzpt83OzHRw5DtQnsYSNcEPgY3goruVoq8DpmrSn",
+  "sha256": "5a23f32c3fab28ee1d34f1ca137b7b7c4d65ea48886a61d35ec4712e57612c6b",
+  "verified": "4,303 cases (19 named, 4,284 sweep: ages 54-74, deferrals 0-16, single and joint, three premiums) against expected values computed independently from the master workbook. Run 2026-11-11.",
+  "usage": "<script src=\"https://gary832.github.io/retirementum-calc/rm-payout-lookup-1.0.0.js\" integrity=\"sha384-Qj76PS/1zjL2sSQjKMhgyu7zIzpt83OzHRw5DtQnsYSNcEPgY3goruVoq8DpmrSn\" crossorigin=\"anonymous\"></script>"
+}

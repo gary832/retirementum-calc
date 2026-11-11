@@ -1,0 +1,9 @@
+{
+  "file": "rm-payout-2026-11-11.json",
+  "release": "2026-11-11",
+  "integrity": "sha384-FoNG4VGXBrSAmjuYgwRQsLlfb2Uqvp7GJZAsGiTIuUS35zkQ/LofGWTYTSBgRr1l",
+  "sha256": "ef042911ee7ae4717f3fa9e7b8d4b844c78c4069123a2f50198a3e64e8c4e18b",
+  "built": "2026-11-11",
+  "source_workbook": "RetireMentum_Payout_Master_2026-11-11.xlsx",
+  "scenarios": 128
+}

@@ -1,0 +1,11 @@
+{
+  "file": "rm-calc-1.0.0.min.js",
+  "version": "1.0.0",
+  "model": "rm-calc-1.0.0-rc1",
+  "integrity": "sha384-PDo4/tOT7H09jvKdJAO/FyYhVI2JQhpEER9EZ020MyruPDY6sblDxsxQSNqweSl6",
+  "sha256": "488a621f7ce06e5114db8487d3d99ac1906a161e5bfe12a2b39ea191d5e2338a",
+  "engine": "LayerWise v27.3.0 (engine 25.8.0), calculation core only",
+  "verified": "Identical to the full LayerWise v27.3.0 engine (via RetireMentum v0.6) on 2,619 households: 19 shared fixtures, 2,000 random and 600 targeted, every output field compared exactly, plain and minified builds. Run 2026-11-10.",
+  "contents": "Calculation only: tax, Social Security, required distributions and the year-by-year cash flow. No payout tables, carrier data or test cases.",
+  "usage": "<script src=\"https://gary832.github.io/retirementum-calc/rm-calc-1.0.0.min.js\" integrity=\"sha384-PDo4/tOT7H09jvKdJAO/FyYhVI2JQhpEER9EZ020MyruPDY6sblDxsxQSNqweSl6\" crossorigin=\"anonymous\"></script>"
+}

@@ -1,0 +1,16 @@
+{
+  "file": "rm-calc-2.0.0.min.js",
+  "version": "2.0.0",
+  "model": "rm-calc-2.0.0-rc1",
+  "status": "review candidate, not published",
+  "layerwise": "LayerWise v27.1.0",
+  "build": "27.1.0+b20261108.r1",
+  "engine": "25.6.0",
+  "sourceFile": "baseline/LayerWise-v27.1.0.html",
+  "sourceSha256": "d29cc7133ff059993d54adb18ca4cbb94af72e7c299ae058f3fad76ba1da9538",
+  "minified_from": "rm-calc-2.0.0.js with terser 5.51.2 (-c -m --comments /^!/)",
+  "verified": "Run 2026-11-11: identical to the full LayerWise v27.1.0 page, every report figure and the complete engine input, with no tolerance: 250 frozen packet cases and 2,000 random households, each with and without the income layer (4,500 runs; 1,875 of them with a real layer), with rm-calc in the same Chrome page. Also run from Node.js: same 4,500 runs, engine input identical in all; 2 report rows differ by 4.5e-13 from the different JavaScript engine version (identical when run in Chrome). Answer mapper identical to rm-calc 1.1.0 on 3,000 households. Independently reviewed: extraction byte-compared, 773 additional comparisons, no calculation differences.",
+  "integrity": "sha384-/b/UWNMOLUa/9NRzw8UXkZT+6Hr48AfDUxd+ZVwwN7txlyzfoAVtbwsUbhkzE014",
+  "sha256": "96ae55fb98b1415c9404962a308edc3edf777583ee402700554af0c1f6111ea1",
+  "usage": "<script src=\"https://gary832.github.io/retirementum-calc/rm-calc-2.0.0.min.js\" integrity=\"sha384-/b/UWNMOLUa/9NRzw8UXkZT+6Hr48AfDUxd+ZVwwN7txlyzfoAVtbwsUbhkzE014\" crossorigin=\"anonymous\"></script>"
+}

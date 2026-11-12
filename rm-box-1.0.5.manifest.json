@@ -1,0 +1,14 @@
+{
+  "file": "rm-box-1.0.5.js",
+  "version": "1.0.5",
+  "status": "review candidate, not published",
+  "needs": [
+    "rm-calc 2.0.0",
+    "rm-payout-lookup 1.0.0 (comparison only)"
+  ],
+  "change": "From rm-box 1.0.4 (Gary Jensen, 2026-11-12): retired:true alone no longer makes a workplace plan eligible. A plan can fund the comparison only for an owner who (a) no longer works for that employer and whose plan administrator confirmed money can be rolled out now (planFormer + planReleaseOk; no age gate), or (b) still works there and meets the existing current-employer checks (planInService; age 60+, or 59 with over595; 58 or younger never). Either path also needs the confirmed eligible pre-tax amount (planEligibleAmt / planEligibleAmtS); only that amount can fund the layer, while the full plan balance stays in the baseline and in the 50% asset cap. Unknown amount: plan left out of automatic funding (reason amount_unknown) with a consultation message. Amount validated: a number from 0 to the plan balance (errors plan_amount_above_balance, bad_plan_amount; recoverable, baseline kept). Each owner judged on their own answers. New excluded-plan reasons: not_confirmed, release_not_confirmed, amount_unknown, no_amount_available. funding.includedPlans lists each eligible plan with its balance, eligible amount and path. Funding order and caps unchanged.",
+  "verified": "Run 2026-11-12: workplace-plan acceptance checks (8 groups) pass; rm-box 1.0.4 focused funding suite, updated for the new rule, passes; bridge suite 2,000 households x 2 modes with former/current/unknown/partial plan answers: 0 failures; 600 random households funded by 1.0.5 (275 partial workplace-plan fundings) checked against the full LayerWise v27.1.0 page in Chrome: 1,200 of 1,200 runs exact, engine input identical.",
+  "integrity": "sha384-qJKYkS4AjHd6prnI78gHwKuGpAqIRgH1RlAPJ7KjlbncGtpzEGhLyVfG2TiVUQ9V",
+  "sha256": "3ddc4f2ae965dbf37d7ab4fe7c0cd243e6bf5ecbff88d1cb7e45fde86905e713",
+  "usage": "<script src=\"https://gary832.github.io/retirementum-calc/rm-box-1.0.5.js\" integrity=\"sha384-qJKYkS4AjHd6prnI78gHwKuGpAqIRgH1RlAPJ7KjlbncGtpzEGhLyVfG2TiVUQ9V\" crossorigin=\"anonymous\"></script>"
+}

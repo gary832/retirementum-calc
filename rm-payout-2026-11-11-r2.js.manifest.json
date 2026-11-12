@@ -1,0 +1,9 @@
+{
+  "file": "rm-payout-2026-11-11-r2.js",
+  "release": "2026-11-11-r2",
+  "content": "Script form of rm-payout-2026-11-11-r2.json: sets window.RMPayoutRates to the identical rate table. Published because the Perspective funnel cannot fetch() data files.",
+  "verified": "2026-11-12: window.RMPayoutRates deep-equals rm-payout-2026-11-11-r2.json (sha256 0413ec05be575f7cb2de45c29b2a76565b90794ad29f6d70a7ffa2b9a886733b); RMBox.run returns identical results with either.",
+  "integrity": "sha384-hJVgxbkbzQMdbl4UffjjwYy+oiZIAVvXghk8jrgABLAVR6OJ0ONqS6tprS7LXSt4",
+  "sha256": "4c0f10ed033ec76e01c140d6fb3d18d3651266319794f2e6b48bd499fd501ce8",
+  "usage": "<script src=\"https://gary832.github.io/retirementum-calc/rm-payout-2026-11-11-r2.js\" integrity=\"sha384-hJVgxbkbzQMdbl4UffjjwYy+oiZIAVvXghk8jrgABLAVR6OJ0ONqS6tprS7LXSt4\" crossorigin=\"anonymous\"></script>"
+}

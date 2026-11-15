@@ -1,0 +1,209 @@
+{
+ "engine": {
+  "repo": "https://github.com/gary832/retirementum-calc",
+  "commit": "e331e24dbf3928b1b553894d96289633f1bab157",
+  "files": {
+   "rm-calc-2.0.0.min.js": "96ae55fb98b1415c9404962a308edc3edf777583ee402700554af0c1f6111ea1",
+   "rm-payout-lookup-1.0.0.js": "5a23f32c3fab28ee1d34f1ca137b7b7c4d65ea48886a61d35ec4712e57612c6b",
+   "rm-box-1.0.5.js": "3ddc4f2ae965dbf37d7ab4fe7c0cd243e6bf5ecbff88d1cb7e45fde86905e713",
+   "rm-payout-2026-11-11-r2.js": "4c0f10ed033ec76e01c140d6fb3d18d3651266319794f2e6b48bd499fd501ce8"
+  },
+  "checkedCommit": "e331e24dbf3928b1b553894d96289633f1bab157",
+  "node": "v22.23.4"
+ },
+ "rows": [
+  {
+   "household": "sample",
+   "label": "Sample couple, 64/64, $1.2M, SS $3,500/mo, spend $8,000/mo (62.5% essential), TX",
+   "reportYear": 2027,
+   "bCapped": false,
+   "monthly": {
+    "B": 1663,
+    "C25": 2433,
+    "C50": 3203
+   },
+   "rate": {
+    "A": 0.043500625062733896,
+    "B": 0.03580518160015344,
+    "C25": 0.031320126727223396,
+    "C50": 0.025515655055642125
+   },
+   "shareOfSavings": {
+    "C50": 0.39166666666666666
+   },
+   "equalTo": {
+    "C25": null,
+    "C50": null
+   }
+  },
+  {
+   "household": "lean",
+   "label": "Lean couple, 63/61, $650k, SS $3,800/mo, spend $6,500/mo (75% essential), FL",
+   "reportYear": 2030,
+   "bCapped": false,
+   "monthly": {
+    "B": 1254,
+    "C25": 1703,
+    "C50": 2152
+   },
+   "rate": {
+    "A": 0.053536317311227315,
+    "B": 0.04079679213464261,
+    "C25": 0.03564097732305526,
+    "C50": 0.029211804270744324
+   },
+   "shareOfSavings": {
+    "C50": 0.4646153846153846
+   },
+   "equalTo": {
+    "C25": null,
+    "C50": null
+   }
+  },
+  {
+   "household": "affluent",
+   "label": "Affluent couple, 62/60, $2.4M, SS $4,600/mo, spend $14,000/mo (45% essential), AZ",
+   "reportYear": 2033,
+   "bCapped": false,
+   "monthly": {
+    "B": 3298,
+    "C25": 5591,
+    "C50": 7877
+   },
+   "rate": {
+    "A": 0.05927559640258549,
+    "B": 0.05343618406914174,
+    "C25": 0.04298228444531561,
+    "C50": 0.03538242587819695
+   },
+   "shareOfSavings": {
+    "C50": 0.415
+   },
+   "equalTo": {
+    "C25": null,
+    "C50": null
+   }
+  },
+  {
+   "household": "single",
+   "label": "Single, 66, $800k, SS $2,400/mo, spend $5,500/mo (70% essential), NC",
+   "reportYear": 2026,
+   "bCapped": false,
+   "monthly": {
+    "B": 1711,
+    "C25": 2124,
+    "C50": 2530
+   },
+   "rate": {
+    "A": 0.047200934030115604,
+    "B": 0.03494925890117884,
+    "C25": 0.03050556592643261,
+    "C50": 0.025045977905392647
+   },
+   "shareOfSavings": {
+    "C50": 0.43625
+   },
+   "equalTo": {
+    "C25": null,
+    "C50": null
+   }
+  },
+  {
+   "household": "pension",
+   "label": "Couple with pension, 65/63, $900k, SS $3,600/mo + pension $2,000/mo, spend $9,000/mo (60% essential), OH",
+   "reportYear": 2028,
+   "bCapped": false,
+   "monthly": {
+    "B": 89,
+    "C25": 1033,
+    "C50": 1982
+   },
+   "rate": {
+    "A": 0.05462972074747085,
+    "B": 0.05441631935536862,
+    "C25": 0.05166658759117128,
+    "C50": 0.04717334266752005
+   },
+   "shareOfSavings": {
+    "C50": 0.34555555555555556
+   },
+   "equalTo": {
+    "C25": null,
+    "C50": null
+   }
+  },
+  {
+   "household": "highDisc",
+   "label": "High discretionary, 60/60, $1.5M, SS $3,000/mo at 67, spend $10,000/mo (40% essential), TN",
+   "reportYear": 2033,
+   "bCapped": false,
+   "monthly": {
+    "B": 1682,
+    "C25": 3462,
+    "C50": 5249
+   },
+   "rate": {
+    "A": 0.07907211594283584,
+    "B": 0.07810846390202641,
+    "C25": 0.07653978653252126,
+    "C50": 0.07375198788940905
+   },
+   "shareOfSavings": {
+    "C50": 0.49933333333333335
+   },
+   "equalTo": {
+    "C25": null,
+    "C50": null
+   }
+  },
+  {
+   "household": "highWithdrawal",
+   "label": "High withdrawal, single 66, $500k, SS $2,000/mo, spend $6,000/mo (70% essential), TX",
+   "reportYear": 2026,
+   "bCapped": true,
+   "monthly": {
+    "B": 1813,
+    "C25": 1813,
+    "C50": 1813
+   },
+   "rate": {
+    "A": 0.09733333438634872,
+    "B": 0.11801350116729736,
+    "C25": 0.11801350116729736,
+    "C50": 0.11801350116729736
+   },
+   "shareOfSavings": {
+    "C50": 0.5
+   },
+   "equalTo": {
+    "C25": "B",
+    "C50": "B"
+   }
+  },
+  {
+   "household": "lowWithdrawal",
+   "label": "Low withdrawal, 67/66, $1.6M, SS $4,400/mo, spend $8,000/mo (65% essential), TX",
+   "reportYear": 2026,
+   "bCapped": false,
+   "monthly": {
+    "B": 847,
+    "C25": 1551,
+    "C50": 2248
+   },
+   "rate": {
+    "A": 0.02700000023469329,
+    "B": 0.022379403933882713,
+    "C25": 0.01796439429745078,
+    "C50": 0.013496177736669779
+   },
+   "shareOfSavings": {
+    "C50": 0.205625
+   },
+   "equalTo": {
+    "C25": null,
+    "C50": null
+   }
+  }
+ ],
+ "fails": []
+}

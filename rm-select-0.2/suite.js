@@ -411,6 +411,62 @@ for (const [label, a, sel, path] of cases) {
   t(g, 'R4: account-limited cap → remaining essential gap reported (> 0)', rc.status === 'capped' && rc.limit.remainingEssentialGap > 0, rc.limit.remainingEssentialGap);
 }
 
+// ---------- 8. Regressions from the developer review of 0.2.1 (5e92458) ----------
+{
+  const g = 'review 0.2.1';
+  const clone = x => JSON.parse(JSON.stringify(x));
+  const modeOf = { B: 'essential', C: 'essential_plus', D: 'premium' };
+  const withStub = (o, mutate) => SEL.make({ RMCalc: E.RMCalc, RMBox: { version: E.RMBox.version, run(a, tb, opt) {
+    const r = E.RMBox.run(a, tb, opt);
+    if (opt && opt.mode === modeOf[o] && r.layer) { const m = clone(r); mutate(m); return m; }
+    return r;
+  } } }, E.rates);
+  const sel = o => ({ option: o, cShare: 0.5, dMonthlyToday: 2000 });
+
+  // R5. An otherwise valid pricing reply whose withdrawal is unresolved must not be read as a zero withdrawal.
+  {
+    let r, threw = false;
+    try { r = withStub('D', m => { m.after.fromPortfolio = null; m.after.rateState = 'unresolved'; m.after.rate = null; }).select(fixtures.sample, sel('D')); } catch (e) { threw = String(e); }
+    t(g, 'R5: D@$2,000 with an unresolved priced withdrawal → error withdrawal_unresolved, baseline kept, goal not met',
+      !threw && r.status === 'error' && r.reason.code === 'withdrawal_unresolved' && r.after === r.before && !r.layer &&
+      r.goal.met === false && r.goal.feasibleAnnualAfterTax === null, threw || { status: r.status, reason: r.reason, met: r.goal && r.goal.met, feasible: r.goal && r.goal.feasibleAnnualAfterTax });
+  }
+  const inconsistent = {
+    'null withdrawal with rate state ok': m => { m.after.fromPortfolio = null; },
+    'NaN withdrawal': m => { m.after.fromPortfolio = NaN; },
+    'numeric withdrawal with rate state unresolved': m => { m.after.rateState = 'unresolved'; }
+  };
+  for (const [label, mutate] of Object.entries(inconsistent)) for (const o of ['B', 'C', 'D']) {
+    let r, threw = false;
+    try { r = withStub(o, mutate).select(fixtures.sample, sel(o)); } catch (e) { threw = String(e); }
+    t(g, `R5: ${o} pricing reply with ${label} → error result with the baseline`,
+      !threw && r.status === 'error' && r.after === r.before && !r.layer, threw || { status: r.status, reason: r.reason });
+  }
+
+  // R6. Every funding entry must have an account id and a finite positive amount, and the entries must add up to the premium.
+  const badFund = {
+    'a null entry': f => f.concat([null]),
+    'an entry with an empty account id': f => f.concat([{ aid: '', amt: 1000 }]),
+    'an entry with a negative amount': f => f.concat([{ aid: 'A2', amt: -5 }]),
+    'an entry with a text amount': f => f.concat([{ aid: 'A2', amt: '1000' }]),
+    'an entry with a NaN amount': f => f.concat([{ aid: 'A2', amt: NaN }]),
+    'an entry with no account id': f => f.concat([{ amt: 1000 }]),
+    'entries that do not add up to the premium': f => f.map((x, i) => i === 0 ? Object.assign({}, x, { amt: x.amt - 5000 }) : x)
+  };
+  for (const [label, change] of Object.entries(badFund)) for (const o of ['B', 'C', 'D']) {
+    let r, threw = false;
+    try { r = withStub(o, m => { m.layer.fund = change(m.layer.fund); }).select(fixtures.sample, sel(o)); } catch (e) { threw = String(e); }
+    t(g, `R6: ${o} funding list with ${label} (list otherwise valid) → error result with the baseline, nothing carried into the result`,
+      !threw && r.status === 'error' && r.after === r.before && !r.layer && !JSON.stringify(r).includes('"fund"'), threw || { status: r.status, reason: r.reason });
+  }
+  // Valid funding lists still pass: every real result's entries are well formed and add up.
+  for (const o of ['B', 'C', 'D']) {
+    const r = S.select(fixtures.sample, sel(o));
+    t(g, `R6: real ${o} result still accepted, funding entries well formed`, ['ok', 'capped'].includes(r.status) &&
+      r.layer.fund.every(x => typeof x.aid === 'string' && x.aid && Number.isFinite(x.amt) && x.amt > 0), r.status);
+  }
+}
+
 // ---------- report ----------
 const fail = checks.filter(c => !c.ok);
 const byGroup = {};

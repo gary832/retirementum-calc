@@ -1,9 +1,9 @@
-/*! rm-record 0.2.1 | The saved record behind the Snapshot, and the one display model both the selector and the Snapshot render.
+/*! rm-record 0.2.2 | The saved record behind the Snapshot, and the one display model both the selector and the Snapshot render.
  *  The Snapshot renders from the saved record only: it never calls the engine. Change my choice re-runs the engine and saves a new record. */
 (function (root) {
   'use strict';
 
-  var VERSION = '0.2.1';
+  var VERSION = '0.2.2';
 
   // A record holds what was asked, what was chosen, what the engine returned, and which engine and payout files produced it.
   function save(answers, selection, result, meta) {

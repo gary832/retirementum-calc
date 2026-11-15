@@ -1,4 +1,4 @@
-/*! rm-select 0.2.1 | RetireMentum v2 selector bridge: maps options A-D onto rm-box 1.0.5 and returns one display-ready result.
+/*! rm-select 0.2.2 | RetireMentum v2 selector bridge: maps options A-D onto rm-box 1.0.5 and returns one display-ready result.
  *  Needs rm-calc 2.0.0 (window.RMCalc), rm-box 1.0.5 (window.RMBox), and for B-D the payout lookup and a payout table.
  *  rm-box itself is unchanged. Option D is the only new calculation.
  *
@@ -19,7 +19,7 @@
 (function (root) {
   'use strict';
 
-  var VERSION = '0.2.1';
+  var VERSION = '0.2.2';
   var TOL = 1;
   var STEP = 1000;
   var MAX_MONTHLY = 100000;
@@ -57,15 +57,21 @@
 
     // Pricing replies are checked field by field before use; anything incomplete becomes an error result with the baseline.
     function num(x) { return typeof x === 'number' && isFinite(x); }
+    // A resolved withdrawal (rate state ok or zero) is a finite number; an unresolved one (savings can't cover the year) is null.
+    function resolved(s) { return s.rateState === 'ok' || s.rateState === 'zero'; }
     function summaryOk(s) {
       return !!s && num(s.essential) && num(s.discretionary) && num(s.tax) && num(s.guaranteed) && num(s.socialSecurity) &&
-        num(s.otherIncome) && num(s.layerIncome) && num(s.shortfall) && (s.fromPortfolio === null || num(s.fromPortfolio)) &&
-        typeof s.rateState === 'string';
+        num(s.otherIncome) && num(s.layerIncome) && num(s.shortfall) && typeof s.rateState === 'string' &&
+        (resolved(s) ? num(s.fromPortfolio) : s.fromPortfolio === null);
     }
     function fundingOk(f) { return !!f && num(f.assetCap) && num(f.eligibleCap); }
+    function fundEntryOk(x) { return !!x && typeof x === 'object' && typeof x.aid === 'string' && x.aid.length > 0 && num(x.amt) && x.amt > 0; }
     function layerOk(L) {
-      return !!L && num(L.premium) && L.premium > 0 && num(L.annualIncome) && Array.isArray(L.layers) && L.layers.length > 0 &&
-        L.layers.every(function (x) { return x && typeof x.taxType === 'string'; }) && Array.isArray(L.fund) && L.fund.length > 0;
+      if (!L || !num(L.premium) || !(L.premium > 0) || !num(L.annualIncome) || !Array.isArray(L.layers) || L.layers.length === 0) return false;
+      if (!L.layers.every(function (x) { return x && typeof x.taxType === 'string'; })) return false;
+      if (!Array.isArray(L.fund) || L.fund.length === 0 || !L.fund.every(fundEntryOk)) return false;
+      var total = L.fund.reduce(function (s, x) { return s + x.amt; }, 0);
+      return Math.abs(total - L.premium) <= TOL;   // funding must add up to the premium
     }
     function pricedOk(r) { return !!r && summaryOk(r.after) && layerOk(r.layer) && fundingOk(r.funding); }
 
@@ -199,6 +205,8 @@
         if (seen[p]) return seen[p];
         var r = run(answers, { mode: 'premium', premium: p });
         if (r.status === 'error' || !pricedOk(r) || r.layer.premium !== p) throw { pricing: true, premium: p, status: r.status, code: r.code || 'engine_incomplete' };
+        // D measures its benefit from the withdrawal, so a priced year must have a finite, resolved withdrawal.
+        if (!resolved(r.after) || !num(r.after.fromPortfolio)) throw { pricing: true, premium: p, status: r.status, code: 'withdrawal_unresolved' };
         seen[p] = r;
         return r;
       }
@@ -244,7 +252,9 @@
       } catch (e) {
         if (e && e.pricing)
           return result('D', base, basis, { status: 'error', goal: goal, limit: lim, engineDetail: { premium: e.premium, status: e.status, code: e.code },
-            reason: { code: 'pricing_failed', text: TEXT.engine_error } });
+            reason: e.code === 'withdrawal_unresolved'
+              ? { code: 'withdrawal_unresolved', text: 'We couldn’t work out your withdrawal with this income layer, so this amount can’t be estimated. Your current plan is shown.' }
+              : { code: 'pricing_failed', text: TEXT.engine_error } });
         throw e;
       }
     }

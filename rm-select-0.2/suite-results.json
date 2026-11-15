@@ -11,8 +11,8 @@
   "checkedCommit": "e331e24dbf3928b1b553894d96289633f1bab157",
   "node": "v22.23.4"
  },
- "rmSelect": "0.2.1",
- "pass": 2001,
+ "rmSelect": "0.2.2",
+ "pass": 2035,
  "fail": 0,
  "byGroup": {
   "reconcile": {
@@ -53,6 +53,10 @@
   },
   "review 0.2.0": {
    "pass": 98,
+   "fail": 0
+  },
+  "review 0.2.1": {
+   "pass": 34,
    "fail": 0
   }
  },
@@ -10060,6 +10064,176 @@
   {
    "group": "review 0.2.0",
    "name": "R4: account-limited cap → remaining essential gap reported (> 0)",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R5: D@$2,000 with an unresolved priced withdrawal → error withdrawal_unresolved, baseline kept, goal not met",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R5: B pricing reply with null withdrawal with rate state ok → error result with the baseline",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R5: C pricing reply with null withdrawal with rate state ok → error result with the baseline",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R5: D pricing reply with null withdrawal with rate state ok → error result with the baseline",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R5: B pricing reply with NaN withdrawal → error result with the baseline",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R5: C pricing reply with NaN withdrawal → error result with the baseline",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R5: D pricing reply with NaN withdrawal → error result with the baseline",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R5: B pricing reply with numeric withdrawal with rate state unresolved → error result with the baseline",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R5: C pricing reply with numeric withdrawal with rate state unresolved → error result with the baseline",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R5: D pricing reply with numeric withdrawal with rate state unresolved → error result with the baseline",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: B funding list with a null entry (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: C funding list with a null entry (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: D funding list with a null entry (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: B funding list with an entry with an empty account id (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: C funding list with an entry with an empty account id (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: D funding list with an entry with an empty account id (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: B funding list with an entry with a negative amount (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: C funding list with an entry with a negative amount (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: D funding list with an entry with a negative amount (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: B funding list with an entry with a text amount (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: C funding list with an entry with a text amount (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: D funding list with an entry with a text amount (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: B funding list with an entry with a NaN amount (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: C funding list with an entry with a NaN amount (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: D funding list with an entry with a NaN amount (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: B funding list with an entry with no account id (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: C funding list with an entry with no account id (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: D funding list with an entry with no account id (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: B funding list with entries that do not add up to the premium (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: C funding list with entries that do not add up to the premium (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: D funding list with entries that do not add up to the premium (list otherwise valid) → error result with the baseline, nothing carried into the result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: real B result still accepted, funding entries well formed",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: real C result still accepted, funding entries well formed",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.1",
+   "name": "R6: real D result still accepted, funding entries well formed",
    "ok": true
   }
  ]

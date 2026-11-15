@@ -11,9 +11,13 @@ Finished files for the RetireMentum Perspective funnel: the calculator, the fund
 | `rm-payout-lookup-1.0.0.js` | Turns a prospect's age(s), deferral and premium into an income estimate using a payout file |
 | `rm-payout-2026-11-11-r2.json` | Lifetime income per $100,000 by issue age (55–75), single or joint, and years of deferral |
 | `rm-payout-2026-11-11-r2.js` | The same rate table as a script that sets `window.RMPayoutRates`, for pages that can't fetch data files (the Perspective funnel) |
+| `rm-select-0.2.2.js` | v2 selector bridge: maps the four income-strategy options onto rm-box 1.0.5 and returns one display-ready result (`window.RMSelect`). Used only by the v2 draft funnel |
+| `rm-record-0.2.2.js` | v2 saved record and shared display model; the Snapshot renders from the saved record without the engine (`window.RMRecord`). Used only by the v2 draft funnel |
 | `*.manifest.json` | Version, SHA-384 integrity hash and verification notes for each file |
 
 Load order: `rm-calc-2.0.0.min.js`, `rm-payout-lookup-1.0.0.js`, `rm-box-1.0.5.js`, then `rm-payout-2026-11-11-r2.js`, each with the `integrity` value from its manifest. Pages that can fetch may load the `.json` with its integrity value instead; both hold the identical table. If the lookup or the rate file fails to load, the baseline snapshot still works.
+
+The v2 draft funnel loads the same four files in the same order, then `rm-select-0.2.2.js` and `rm-record-0.2.2.js`, each with its manifest's `integrity` value. The baseline funnel does not load them. Their contract, acceptance suite and test fixtures are on the `review/rm-select-0.2` branch (signed off at `d6b3760`).
 
 ## Superseded (do not use)
 

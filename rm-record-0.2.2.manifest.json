@@ -1,0 +1,13 @@
+{
+  "file": "rm-record-0.2.2.js",
+  "version": "0.2.2",
+  "status": "review candidate, not published; signed off by developer review 2026-11-15 at commit d6b3760",
+  "needs": [
+    "rm-select 0.2.2 results"
+  ],
+  "what": "Saved record behind the v2 Snapshot and the one display model the selector and Snapshot share (window.RMRecord). Never calls the engine. Not loaded by the baseline funnel.",
+  "verified": "Developer review sign-off 2026-11-15 of review/rm-select-0.2 at d6b37601c34c0b6ea1af32223727f05f9173baef: acceptance suite 2,035 checks pass, 0 fail, Option C assertions pass, run from the GitHub archive against engine commit e331e24 with all four engine file hashes matching. Build-team fresh-clone ./ci.sh on Node 22.23.4: same result. File content is byte-identical to rm-select-0.2/rm-record.js at d6b3760.",
+  "integrity": "sha384-xY4LQj/c87+WfZPmX04ry5qtnIlSOjW4bucokOnAVWq83B0oVZ+qpF49JOzsBHnA",
+  "sha256": "7bdff898036dde2cc6112d1190971626d4b6b1856a2a2f78880cfec89c4ec1b5",
+  "usage": "<script src=\"https://gary832.github.io/retirementum-calc/rm-record-0.2.2.js\" integrity=\"sha384-xY4LQj/c87+WfZPmX04ry5qtnIlSOjW4bucokOnAVWq83B0oVZ+qpF49JOzsBHnA\" crossorigin=\"anonymous\"></script>"
+}

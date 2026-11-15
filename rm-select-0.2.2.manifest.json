@@ -1,0 +1,15 @@
+{
+  "file": "rm-select-0.2.2.js",
+  "version": "0.2.2",
+  "status": "review candidate, not published; signed off by developer review 2026-11-15 at commit d6b3760",
+  "needs": [
+    "rm-calc 2.0.0",
+    "rm-box 1.0.5",
+    "rm-payout-lookup 1.0.0 and a payout table (options B-D)"
+  ],
+  "what": "RetireMentum v2 selector bridge: maps options A-D onto rm-box 1.0.5 and returns one display-ready result (window.RMSelect). Not loaded by the baseline funnel.",
+  "verified": "Developer review sign-off 2026-11-15 of review/rm-select-0.2 at d6b37601c34c0b6ea1af32223727f05f9173baef: acceptance suite 2,035 checks pass, 0 fail, Option C assertions pass, run from the GitHub archive against engine commit e331e24 with all four engine file hashes matching. Build-team fresh-clone ./ci.sh on Node 22.23.4: same result. File content is byte-identical to rm-select-0.2/rm-select.js at d6b3760.",
+  "integrity": "sha384-HXsTIGiVBvtN8VAlVAsFx24y2icNfWVehnNr3NasynDwhqiWPTNKecBjHUIOZMDg",
+  "sha256": "2c480e14b06556582385a9cb8908c885606494195d3642f9558955b563bab13e",
+  "usage": "<script src=\"https://gary832.github.io/retirementum-calc/rm-select-0.2.2.js\" integrity=\"sha384-HXsTIGiVBvtN8VAlVAsFx24y2icNfWVehnNr3NasynDwhqiWPTNKecBjHUIOZMDg\" crossorigin=\"anonymous\"></script>"
+}

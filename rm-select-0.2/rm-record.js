@@ -1,9 +1,9 @@
-/*! rm-record 0.2.0 | The saved record behind the Snapshot, and the one display model both the selector and the Snapshot render.
+/*! rm-record 0.2.1 | The saved record behind the Snapshot, and the one display model both the selector and the Snapshot render.
  *  The Snapshot renders from the saved record only: it never calls the engine. Change my choice re-runs the engine and saves a new record. */
 (function (root) {
   'use strict';
 
-  var VERSION = '0.2.0';
+  var VERSION = '0.2.1';
 
   // A record holds what was asked, what was chosen, what the engine returned, and which engine and payout files produced it.
   function save(answers, selection, result, meta) {
@@ -60,7 +60,10 @@
       shareOfSavings: result.layer ? Math.round(result.layer.shareOfAssets * 1000) / 10 : 0,
       layerStartAge: result.layer ? result.layer.startAge : null,
       goalMonthlyToday: result.goal ? result.goal.monthlyToday : null,
+      goalAnnualReportYear: result.goal && result.goal.annualReportYear != null ? result.goal.annualReportYear : null,
       feasibleMonthlyToday: result.goal ? result.goal.feasibleMonthlyToday : null,
+      feasibleAnnualReportYear: result.goal && result.goal.feasibleAnnualAfterTax != null ? result.goal.feasibleAnnualAfterTax : null,
+      feasibleAnnualBasis: result.goal && result.goal.feasibleAnnualAfterTax != null ? 'after tax, a year, in ' + bs.amounts : null,
       goalInputBasis: result.goal ? bs.goalInput : null,
       limitBinding: result.limit ? result.limit.binding : null,
       limitReached: result.limit ? !!result.limit.reached : false,

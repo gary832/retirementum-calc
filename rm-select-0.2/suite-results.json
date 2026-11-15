@@ -11,8 +11,8 @@
   "checkedCommit": "e331e24dbf3928b1b553894d96289633f1bab157",
   "node": "v22.23.4"
  },
- "rmSelect": "0.2.0",
- "pass": 1903,
+ "rmSelect": "0.2.1",
+ "pass": 2001,
  "fail": 0,
  "byGroup": {
   "reconcile": {
@@ -49,6 +49,10 @@
   },
   "round trip": {
    "pass": 42,
+   "fail": 0
+  },
+  "review 0.2.0": {
+   "pass": 98,
    "fail": 0
   }
  },
@@ -9566,6 +9570,496 @@
   {
    "group": "round trip",
    "name": "Change my choice B → C: the Snapshot shows C",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: select(C) equals screen().C for the capped tie (same result object)",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: select(C) carries equalTo B and same_as_B",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: saved and reloaded Snapshot shows the C-equals-B explanation",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: no tie → select(C) not marked equal to B",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: sample C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: lean C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: affluent C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: single C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: pension C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: highDisc C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: highWithdrawal C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: lowWithdrawal C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: brokerHeavy C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: reviewer50k C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: brokerOnly C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: tradToRoth C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: surplus C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: tinyAssets C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: young C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: planConfirmed C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: planUnknown C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: taxRefSingle C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: taxRefJoint C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: allRoth C@0.25: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: sample C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: lean C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: affluent C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: single C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: pension C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: highDisc C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: highWithdrawal C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: lowWithdrawal C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: brokerHeavy C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: reviewer50k C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: brokerOnly C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: tradToRoth C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: surplus C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: tinyAssets C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: young C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: planConfirmed C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: planUnknown C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: taxRefSingle C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: taxRefJoint C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R1: allRoth C@0.5: preview and selected results are identical",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: B pricing reply with no funding → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: C pricing reply with no funding → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: D pricing reply with no funding → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: B pricing reply with funding without eligibleCap → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: C pricing reply with funding without eligibleCap → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: D pricing reply with funding without eligibleCap → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: B pricing reply with layer without layers list → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: C pricing reply with layer without layers list → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: D pricing reply with layer without layers list → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: B pricing reply with layer with empty fund → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: C pricing reply with layer with empty fund → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: D pricing reply with layer with empty fund → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: B pricing reply with after without fromPortfolio → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: C pricing reply with after without fromPortfolio → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: D pricing reply with after without fromPortfolio → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: B pricing reply with after with text tax → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: C pricing reply with after with text tax → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R2: D pricing reply with after with text tax → error result with the baseline, no exception",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"1,2\" rejected",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"1 2\" rejected",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"1$2\" rejected",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"12.345\" rejected",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: 12.345 rejected",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: 0.001 rejected",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"1,23,456\" rejected",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"12,34\" rejected",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"$\" rejected",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \".50\" rejected",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"1.\" rejected",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"$$12\" rejected",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"1 000\" rejected",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"1,000,00\" rejected",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"$1,234.5\" accepted as 1234.5",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"1,234\" accepted as 1234",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"$ 2,000.50\" accepted as 2000.5",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"12,345.67\" accepted as 12345.67",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: 12.34 accepted as 12.34",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"  1500\" accepted as 1500",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R3: \"$12\" accepted as 12",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: D@3700 → capped",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: D@3700: feasible report-year amount is the benefit rounded down",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: D@3700: display exposes the feasible report-year amount with its basis",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: D@3700: remaining essential gap populated from the priced result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: D@3700: monthly feasible amount is consistent with the annual one",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: D@4000 → capped",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: D@4000: feasible report-year amount is the benefit rounded down",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: D@4000: display exposes the feasible report-year amount with its basis",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: D@4000: remaining essential gap populated from the priced result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: D@4000: monthly feasible amount is consistent with the annual one",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: D@2000 → ok",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: D@2000: feasible report-year amount is the benefit rounded down",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: D@2000: display exposes the feasible report-year amount with its basis",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: D@2000: remaining essential gap populated from the priced result",
+   "ok": true
+  },
+  {
+   "group": "review 0.2.0",
+   "name": "R4: account-limited cap → remaining essential gap reported (> 0)",
    "ok": true
   }
  ]

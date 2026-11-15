@@ -1,4 +1,4 @@
-/*! rm-select 0.2.0 | RetireMentum v2 selector bridge: maps options A-D onto rm-box 1.0.5 and returns one display-ready result.
+/*! rm-select 0.2.1 | RetireMentum v2 selector bridge: maps options A-D onto rm-box 1.0.5 and returns one display-ready result.
  *  Needs rm-calc 2.0.0 (window.RMCalc), rm-box 1.0.5 (window.RMBox), and for B-D the payout lookup and a payout table.
  *  rm-box itself is unchanged. Option D is the only new calculation.
  *
@@ -19,7 +19,7 @@
 (function (root) {
   'use strict';
 
-  var VERSION = '0.2.0';
+  var VERSION = '0.2.1';
   var TOL = 1;
   var STEP = 1000;
   var MAX_MONTHLY = 100000;
@@ -55,9 +55,23 @@
       };
     }
 
+    // Pricing replies are checked field by field before use; anything incomplete becomes an error result with the baseline.
+    function num(x) { return typeof x === 'number' && isFinite(x); }
+    function summaryOk(s) {
+      return !!s && num(s.essential) && num(s.discretionary) && num(s.tax) && num(s.guaranteed) && num(s.socialSecurity) &&
+        num(s.otherIncome) && num(s.layerIncome) && num(s.shortfall) && (s.fromPortfolio === null || num(s.fromPortfolio)) &&
+        typeof s.rateState === 'string';
+    }
+    function fundingOk(f) { return !!f && num(f.assetCap) && num(f.eligibleCap); }
+    function layerOk(L) {
+      return !!L && num(L.premium) && L.premium > 0 && num(L.annualIncome) && Array.isArray(L.layers) && L.layers.length > 0 &&
+        L.layers.every(function (x) { return x && typeof x.taxType === 'string'; }) && Array.isArray(L.fund) && L.fund.length > 0;
+    }
+    function pricedOk(r) { return !!r && summaryOk(r.after) && layerOk(r.layer) && fundingOk(r.funding); }
+
     function limitOf(res) {
       var f = res && res.funding;
-      if (!f) return null;
+      if (!fundingOk(f)) return null;
       var cap = Math.min(f.assetCap, f.eligibleCap);
       return { cap: cap, assetCap: f.assetCap, eligibleCap: f.eligibleCap,
         binding: f.eligibleCap < f.assetCap ? 'retirement_accounts' : 'assets',
@@ -119,8 +133,8 @@
         return result(option, base, basis, { status: 'no_layer', limit: lim, engineMessages: msgs,
           reason: res.noLayerReason === 'no_eligible_funds' ? { code: 'no_eligible_funds', text: TEXT.no_eligible_funds }
             : { code: res.noLayerReason || 'no_layer', text: 'No income layer was modeled for these answers.' } });
-      if (!res.layer || !res.after)
-        return result(option, base, basis, { status: 'error', reason: { code: 'engine_incomplete', text: TEXT.engine_error } });
+      if (!pricedOk(res))
+        return result(option, base, basis, { status: 'error', reason: { code: 'engine_incomplete', text: TEXT.engine_error }, engineMessages: msgs });
       var capped = !!res.layer.capped;
       lim.reached = res.layer.premium >= lim.cap;
       lim.remainingEssentialGap = Math.max(0, Math.round(res.after.shortfall));
@@ -129,11 +143,14 @@
         reason: capped ? capReason(lim, res.assets) : null, engineMessages: msgs });
     }
 
+    // Option D input: optional $, digits with commas only in groups of three, at most two decimals; spaces only at the ends
+    // or after the $. Numbers get the same two-decimal rule. The format is checked before any separator is removed.
+    var MONEY = /^\s*\$?\s*(\d{1,3}(,\d{3})+|\d+)(\.\d{1,2})?\s*$/;
+    function twoDecimals(n) { var c = n * 100; return Math.abs(c - Math.round(c)) < 1e-7; }
     function parseGoal(v) {
-      if (typeof v === 'number') return isFinite(v) ? v : NaN;
-      if (typeof v !== 'string') return NaN;
-      var s = v.replace(/[\s$,]/g, '');
-      return /^\d+(\.\d{1,2})?$/.test(s) ? Number(s) : NaN;
+      if (typeof v === 'number') return isFinite(v) && twoDecimals(v) ? v : NaN;
+      if (typeof v !== 'string' || !MONEY.test(v)) return NaN;
+      return Number(v.replace(/[\s$,]/g, ''));
     }
 
     // Option D: after-tax goal in today's dollars.
@@ -181,7 +198,7 @@
       function price(p) {
         if (seen[p]) return seen[p];
         var r = run(answers, { mode: 'premium', premium: p });
-        if (r.status === 'error' || !r.after || !r.layer || r.layer.premium !== p) throw { pricing: true, premium: p, status: r.status, code: r.code || null };
+        if (r.status === 'error' || !pricedOk(r) || r.layer.premium !== p) throw { pricing: true, premium: p, status: r.status, code: r.code || 'engine_incomplete' };
         seen[p] = r;
         return r;
       }
@@ -193,7 +210,8 @@
 
         if (!meets(atCap)) {
           lim.reached = true;
-          goal.feasibleAnnualAfterTax = Math.round(capBenefit);
+          lim.remainingEssentialGap = Math.max(0, Math.round(atCap.after.shortfall));
+          goal.feasibleAnnualAfterTax = Math.floor(capBenefit);
           goal.feasibleMonthlyToday = toMonthlyToday(capBenefit);
           goal.premiumEstimate = { amount: Math.ceil(eff / (capBenefit / lim.cap) / STEP) * STEP, approximate: true,
             method: 'straight-line from the capped result; not modeled' };
@@ -214,7 +232,8 @@
         while (hi - STEP >= STEP && meets(price(hi - STEP)) && walked < 50) { hi -= STEP; walked++; }
         var fin = price(hi), prev = hi - STEP;
         goal.met = meets(fin);
-        goal.feasibleAnnualAfterTax = Math.round(benefit(fin));
+        goal.feasibleAnnualAfterTax = Math.floor(benefit(fin));
+        lim.remainingEssentialGap = Math.max(0, Math.round(fin.after.shortfall));
         goal.feasibleMonthlyToday = toMonthlyToday(benefit(fin));
         goal.verification = { premium: hi, benefit: Math.round(benefit(fin)), meets: goal.met,
           previousPremium: prev >= STEP ? prev : 0, previousBenefit: prev >= STEP ? Math.round(benefit(price(prev))) : 0,
@@ -236,7 +255,8 @@
       var o = sel && sel.option;
       if (o === 'A') return result('A', b.base, b.basis, {});
       if (o === 'B') return engineOption('B', answers, { mode: 'essential' }, b);
-      if (o === 'C') return engineOption('C', answers, { mode: 'essential_plus', discShare: sel.cShare == null ? 0.5 : sel.cShare }, b);
+      if (o === 'C') return markTie(engineOption('B', answers, { mode: 'essential' }, b),
+        engineOption('C', answers, { mode: 'essential_plus', discShare: sel.cShare == null ? 0.5 : sel.cShare }, b));
       if (o === 'D') return optionD(answers, sel.dMonthlyToday, b);
       return { schema: 'rm-select-result/1', status: 'error', reason: { code: 'unknown_option', text: 'Unknown option.' }, versions: versions() };
     }
@@ -247,12 +267,17 @@
       if (b.error) return { error: b.error };
       var A = result('A', b.base, b.basis, {});
       var B = engineOption('B', answers, { mode: 'essential' }, b);
-      var C = engineOption('C', answers, { mode: 'essential_plus', discShare: cShare == null ? 0.5 : cShare }, b);
+      var C = markTie(B, engineOption('C', answers, { mode: 'essential_plus', discShare: cShare == null ? 0.5 : cShare }, b));
+      return { A: A, B: B, C: C };
+    }
+
+    // One rule for the preview and the selected record: C that comes out the same as B says so.
+    function markTie(B, C) {
       if (B.layer && C.layer && B.layer.premium === C.layer.premium) {
         C.equalTo = 'B';
         C.reason = { code: 'same_as_B', text: 'This comes out the same as covering your essentials. ' + (C.limit ? capReason(C.limit, C.assets).text : '') };
       }
-      return { A: A, B: B, C: C };
+      return C;
     }
 
     return { version: VERSION, tolerance: TOL, select: select, screen: screen, parseGoal: parseGoal };

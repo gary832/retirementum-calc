@@ -337,6 +337,80 @@ for (const [label, a, sel, path] of cases) {
   t('round trip', 'Change my choice B → C: the Snapshot shows C', snap2.option === 'C' && snap2.premium === changed.layer.premium);
 }
 
+// ---------- 7. Regressions from the developer review of 0.2.0 (bd1f5c3) ----------
+// R1. C that equals B keeps its explanation from preview through the saved Snapshot.
+{
+  const g = 'review 0.2.0';
+  const preview = S.screen(fixtures.highWithdrawal).C;
+  const chosen = S.select(fixtures.highWithdrawal, { option: 'C', cShare: 0.5 });
+  t(g, 'R1: select(C) equals screen().C for the capped tie (same result object)', JSON.stringify(preview) === JSON.stringify(chosen));
+  t(g, 'R1: select(C) carries equalTo B and same_as_B', chosen.equalTo === 'B' && chosen.reason.code === 'same_as_B', { equalTo: chosen.equalTo, reason: chosen.reason });
+  const store = session();
+  store.set('rm.v2.record', REC.save(fixtures.highWithdrawal, { option: 'C', cShare: 0.5 }, chosen, { selectionPath: 'card' }));
+  const snap = REC.snapshot(store.get('rm.v2.record'));
+  t(g, 'R1: saved and reloaded Snapshot shows the C-equals-B explanation', snap.equalTo === 'B' && snap.reasonCode === 'same_as_B' && /same as covering your essentials/.test(snap.reasonText), snap);
+  const smp = S.select(fixtures.sample, { option: 'C', cShare: 0.5 });
+  t(g, 'R1: no tie → select(C) not marked equal to B', smp.equalTo === null && (!smp.reason || smp.reason.code !== 'same_as_B'));
+  for (const share of [0.25, 0.5]) for (const fx of Object.keys(fixtures)) {
+    const a = S.screen(fixtures[fx], share), c = S.select(fixtures[fx], { option: 'C', cShare: share });
+    if (a.error) continue;
+    t(g, `R1: ${fx} C@${share}: preview and selected results are identical`, JSON.stringify(a.C) === JSON.stringify(c));
+  }
+}
+// R2. Incomplete pricing replies, including ones with some valid nested fields, return the baseline with an error.
+{
+  const g = 'review 0.2.0';
+  const clone = x => JSON.parse(JSON.stringify(x));
+  const mutations = {
+    'no funding': r => { delete r.funding; },
+    'funding without eligibleCap': r => { delete r.funding.eligibleCap; },
+    'layer without layers list': r => { delete r.layer.layers; },
+    'layer with empty fund': r => { r.layer.fund = []; },
+    'after without fromPortfolio': r => { delete r.after.fromPortfolio; },
+    'after with text tax': r => { r.after.tax = 'n/a'; }
+  };
+  const modeOf = { B: 'essential', C: 'essential_plus', D: 'premium' };
+  for (const [label, mutate] of Object.entries(mutations)) for (const o of ['B', 'C', 'D']) {
+    const box = { version: E.RMBox.version, run(a, tb, opt) {
+      const r = E.RMBox.run(a, tb, opt);
+      if (opt && opt.mode === modeOf[o] && r.layer) { const m = clone(r); mutate(m); return m; }
+      return r;
+    } };
+    let r, threw = false;
+    try { r = SEL.make({ RMBox: box, RMCalc: E.RMCalc }, E.rates).select(fixtures.sample, { option: o, cShare: 0.5, dMonthlyToday: 2000 }); } catch (e) { threw = String(e && e.message || e); }
+    t(g, `R2: ${o} pricing reply with ${label} → error result with the baseline, no exception`,
+      !threw && r.status === 'error' && ['engine_incomplete', 'pricing_failed'].includes(r.reason.code) && r.after === r.before && !r.layer, threw || (r && { status: r.status, reason: r.reason }));
+  }
+}
+// R3. Option D input contract: format checked before separators are removed; two decimals for strings and numbers.
+{
+  const g = 'review 0.2.0';
+  for (const v of ['1,2', '1 2', '1$2', '12.345', 12.345, 0.001, '1,23,456', '12,34', '$', '.50', '1.', '$$12', '1 000', '1,000,00']) {
+    const r = D(fixtures.sample, v);
+    t(g, `R3: ${JSON.stringify(v)} rejected`, r.status === 'invalid_input' && r.reason.code === 'invalid_goal', r.status);
+  }
+  for (const [v, m] of [['$1,234.5', 1234.5], ['1,234', 1234], ['$ 2,000.50', 2000.5], ['12,345.67', 12345.67], [12.34, 12.34], ['  1500', 1500], ['$12', 12]]) {
+    const r = D(fixtures.sample, v);
+    t(g, `R3: ${JSON.stringify(v)} accepted as ${m}`, r.goal && r.goal.monthlyToday === m && r.status !== 'invalid_input', r.status);
+  }
+}
+// R4. Option D limit data: feasible report-year amount with its basis, rounded down; remaining essential gap from the priced result.
+{
+  const g = 'review 0.2.0';
+  for (const [m, expectStatus] of [[3700, 'capped'], [4000, 'capped'], [2000, 'ok']]) {
+    const r = D(fixtures.sample, m), d = REC.display(r);
+    const benefit = r.before.fromPortfolio - r.after.fromPortfolio;
+    t(g, `R4: D@${m} → ${expectStatus}`, r.status === expectStatus, r.status);
+    t(g, `R4: D@${m}: feasible report-year amount is the benefit rounded down`, r.goal.feasibleAnnualAfterTax === Math.floor(benefit), { got: r.goal.feasibleAnnualAfterTax, benefit });
+    t(g, `R4: D@${m}: display exposes the feasible report-year amount with its basis`,
+      d.feasibleAnnualReportYear === r.goal.feasibleAnnualAfterTax && /after tax, a year/.test(d.feasibleAnnualBasis) && d.feasibleAnnualBasis.includes(String(r.basis.reportYear)) && d.goalAnnualReportYear === r.goal.annualReportYear, d);
+    t(g, `R4: D@${m}: remaining essential gap populated from the priced result`, r.limit.remainingEssentialGap === Math.max(0, Math.round(r.after.shortfall)) && d.remainingEssentialGap === r.limit.remainingEssentialGap, r.limit.remainingEssentialGap);
+    if (r.status === 'capped') t(g, `R4: D@${m}: monthly feasible amount is consistent with the annual one`, r.goal.feasibleMonthlyToday === Math.floor(benefit / r.basis.goalFactor / 12));
+  }
+  const rc = D(fixtures.reviewer50k, 3000);
+  t(g, 'R4: account-limited cap → remaining essential gap reported (> 0)', rc.status === 'capped' && rc.limit.remainingEssentialGap > 0, rc.limit.remainingEssentialGap);
+}
+
 // ---------- report ----------
 const fail = checks.filter(c => !c.ok);
 const byGroup = {};

@@ -1,4 +1,4 @@
-# rm-select 0.2 — RetireMentum v2 selector bridge and acceptance suite
+# rm-select 0.2.1 — RetireMentum v2 selector bridge and acceptance suite
 
 Prototype for review, not published. The baseline funnel does not load any of this.
 
@@ -20,7 +20,7 @@ Prototype for review, not published. The baseline funnel does not load any of th
 ```sh
 git clone https://github.com/gary832/retirementum-calc.git calc
 git -C calc checkout e331e24dbf3928b1b553894d96289633f1bab157
-node suite.js --repo=calc            # 1,903 checks; exit 1 on any failure; writes suite-results.json
+node suite.js --repo=calc            # 2,001 checks; exit 1 on any failure; writes suite-results.json
 node option-c-test.js --repo=calc    # Option C assertions; exit 1 on any failure; writes option-c-results.json
 ```
 
@@ -40,17 +40,19 @@ Or `./ci.sh` (clones, pins, runs both, fails the build on any failure). Verified
 
 ## Result contract (`rm-select-result/1`)
 
-Every option returns the same shape: `status` (`ok`, `capped`, `no_layer`, `unavailable`, `invalid_input`, `error`), a display-ready `reason {code, text}` with no advisor or booking prompt, `basis` (as-of year, report year and ages, inflation, dollar basis), `before` and `after` (rm-box report-year summaries; `after` is `before` when there is no layer), `layer`, `limit` (cap, asset cap, eligible-account cap, binding limit, reached, remaining essential gap), `goal` (Option D only), `equalTo` (C only, `'B'` when C comes out the same as B), and `versions`. Failures return the baseline; they never throw.
+Every option returns the same shape: `status` (`ok`, `capped`, `no_layer`, `unavailable`, `invalid_input`, `error`), a display-ready `reason {code, text}` with no advisor or booking prompt, `basis` (as-of year, report year and ages, inflation, dollar basis), `before` and `after` (rm-box report-year summaries; `after` is `before` when there is no layer), `layer`, `limit` (cap, asset cap, eligible-account cap, binding limit, reached, remaining essential gap), `goal` (Option D only), `equalTo` (C only, `'B'` when C comes out the same as B; `select` and `screen` return the identical C result, so the explanation reaches the saved Snapshot), and `versions`. Failures return the baseline; they never throw.
 
 ## Option D sizing contract
 
-- Input: after-tax dollars a month in today's dollars; `$`, commas and up to two decimals accepted; $1 to $100,000. Anything else → `invalid_input`.
+- Input: after-tax dollars a month in today's dollars, $1 to $100,000. Strings: an optional `$`, digits with commas only in groups of three (`1,234`, `12,345.67`), at most two decimals, spaces only at the ends or after the `$`; the format is checked before any separator is removed, so `1,2`, `1 2` and `1$2` are rejected. Numbers: at most two decimals (`12.345` is rejected). Anything else → `invalid_input`.
 - Conversion: input × 12 × (1 + plan inflation)^(report year − as-of year), with inflation and as-of year read from rm-calc for those answers.
 - Benefit: baseline withdrawal − withdrawal with the layer, in the report year (layer income minus the extra tax it creates).
 - Met: benefit ≥ min(goal, baseline withdrawal) − $1. The same $1 tolerance is used for the above-need case, the search and the final check.
 - Premium: smallest whole $1,000 that is met; the result records the $1,000 step below and that it fails.
 - Cap: read from a $1,000 probe. No oversize request is ever made or exposed.
-- Capped: layer at the cap, feasible after-tax amount (rounded down), binding limit and reason. A premium estimate is given only when the capped layer has a positive benefit, and is marked `approximate`.
+- Feasible amount: `goal.feasibleAnnualAfterTax` (after tax, a year, report-year dollars) and `goal.feasibleMonthlyToday` (after tax, a month, today's dollars), both rounded down. The display model exposes both, with `feasibleAnnualBasis` naming the report year and inflation.
+- Capped: layer at the cap, feasible amounts, binding limit, remaining essential gap from the priced result, and reason. A premium estimate is given only when the capped layer has a positive benefit, and is marked `approximate`.
+- Pricing replies are validated field by field (summary figures, layer, funding list, funding limits) for B, C and D; an incomplete reply returns `error` (`engine_incomplete` or `pricing_failed`) with the baseline.
 - Not modeled: unavailable payouts, savings that can't cover the year (`savings_unresolved`), no withdrawal needed, no eligible funds, no benefit, and engine errors each return their own status and reason.
 
 ## What the suite checks
@@ -65,6 +67,7 @@ Every option returns the same shape: `status` (`ok`, `capped`, `no_layer`, `unav
 | C formula | C premium = min(cap, round-up(required × 1.05 + share × discretionary ÷ payout)) at 25% and 50%, including no essential gap and cap-trimmed cases. |
 | B/C limits | Cap ties marked equal; remaining gap; account-limited cap; confirmed and unconfirmed workplace plans; zero eligible balance; essentials already covered. |
 | reference | Engine tax vs an independent 2026 federal calculation (IRS Rev. Proc. 2025-32 brackets and deductions, typed separately) for a single and a joint all-IRA household; all-Roth tax is $0; rate = withdrawal ÷ (assets − premium) when the report year is the as-of year; null rates (unresolved and no-withdrawal states); report-year timing and layer start. |
+| review 0.2.0 | Regressions for the developer review of `bd1f5c3`: C-equals-B identical in preview and selected record and kept through save and reload (all fixtures, both shares); incomplete pricing replies with partly valid nested fields for B, C and D; the D input contract; feasible report-year amount with basis, rounded down; remaining essential gap. These 98 checks fail 45 times on 0.2.0 and pass on 0.2.1. |
 | round trip | Record saved to a session store and read back without the engine; Snapshot figures = selector figures = the engine result for the chosen option; versions and engine commit stored; re-running stored inputs reproduces the stored result; Option A via link; Change my choice. |
 
 Mutation check: the suite fails when the D search is skipped, the tolerance is loosened, D ignores tax, the today's-dollar conversion is removed, or the display shows the current plan's withdrawal.

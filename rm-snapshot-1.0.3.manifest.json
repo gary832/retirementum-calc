@@ -1,0 +1,14 @@
+{
+  "file": "rm-snapshot-1.0.3.js",
+  "version": "1.0.3",
+  "status": "release candidate (Snapshot v3.1 RC2), loaded by the integration test copy of the funnel; not yet loaded by the live funnel",
+  "copy_version": "2026-11-19 v3.1 RC2 (owner-approved by Gary Jensen, Nov 19, 2026)",
+  "needs": [
+    "rm-box 1.0.5 results: mode \"none\" and, unless the visitor chose Option A, mode \"essential\""
+  ],
+  "change": "From rm-snapshot 1.0.2 (2026-11-19): fixes a display defect found in browser testing of the integrated funnel. A household with no Social Security or pension income showed '+$-0' on the 'Social Security & pensions' line of the breakdown. Amounts now never show a negative zero, and a zero line shows '$0' with no sign. No change to copy, branch selection, rounding rules or engine values. 1.0.1: the no-estimate message uses the live funnel's rate-data rule. Display layer for the redesigned Retirement Snapshot: formatter (branch selection and display rounding rules R1-R5), the approved copy library, a page fragment with styles scoped to .rms, and Print / Save as PDF (US Letter print layout, details expanded and the rest of the page hidden while printing). Never changes engine values. API: RMSnapshot.build(base, comparison, ctx) and RMSnapshot.render(container, base, comparison, ctx, opt). ctx: firstName, priorities (A.confidence, A.confidence2), state, totalAssets, bookingAllowed, two, inputs (the rm-box answers), optionA, prelim, mixEstimated, quoteDates, asOfYear.",
+  "verified": "Run 2026-11-19: 50 engine-integrated households, 1,447 assertions recomputed from raw rm-box fields: 0 failures, including new assertion T2 (no negative-zero or signed-zero amounts in rendered text and HTML), which fails on 1.0.2 and passes on 1.0.3. Print: 165 checks across H1, H12, H20, E13 and Option A at 1280 px and 390 px: 0 failures. Browser parity: 49 of 49 households identical to the reference in Chromium.",
+  "integrity": "sha384-WiyjfOxUKGU219GPEBw8LjVzy6eivc343EQEnK4rA09G9XF9AtiDTbjYQSG+byXo",
+  "sha256": "3045476c909379d08fa17704e5d970d1dfdb9e8fa39cf5df18b5b0e3aed535e0",
+  "usage": "<script src=\"https://gary832.github.io/retirementum-calc/rm-snapshot-1.0.3.js\" integrity=\"sha384-WiyjfOxUKGU219GPEBw8LjVzy6eivc343EQEnK4rA09G9XF9AtiDTbjYQSG+byXo\" crossorigin=\"anonymous\"></script>"
+}

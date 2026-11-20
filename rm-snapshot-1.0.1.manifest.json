@@ -1,0 +1,14 @@
+{
+  "file": "rm-snapshot-1.0.1.js",
+  "version": "1.0.1",
+  "status": "release candidate (Snapshot v3.1 RC2), not yet loaded by the live funnel",
+  "copy_version": "2026-11-19 v3.1 RC2 (owner-approved by Gary Jensen, Nov 19, 2026)",
+  "needs": [
+    "rm-box 1.0.5 results: mode \"none\" and, unless the visitor chose Option A, mode \"essential\""
+  ],
+  "change": "From rm-snapshot 1.0.0 (2026-11-19): the no-estimate message now uses the live funnel's rule: payout.rateData 'unavailable' shows the temporarily-unavailable message, every other no-estimate result shows the age/deferral range message (1.0.0 matched on reason text). No other change. Display layer for the redesigned Retirement Snapshot: formatter (branch selection and display rounding rules R1-R5), the approved copy library, a page fragment with styles scoped to .rms, and Print / Save as PDF (US Letter print layout, details expanded and the rest of the page hidden while printing). Never changes engine values. API: RMSnapshot.build(base, comparison, ctx) and RMSnapshot.render(container, base, comparison, ctx, opt). ctx: firstName, priorities (A.confidence, A.confidence2), state, totalAssets, bookingAllowed, two, inputs (the rm-box answers), optionA, prelim, mixEstimated, quoteDates, asOfYear.",
+  "verified": "Run 2026-11-19: 50 engine-integrated households, 1,337 assertions recomputed from raw rm-box fields: 0 failures (engine files hash-pinned; a mismatch is fatal). Print: 165 checks across H1, H12, H20, E13 and Option A at 1280 px and 390 px, PDFs on US Letter: 0 failures. Browser parity: 49 households run in Chromium through rm-calc 2.0.0, rm-payout-lookup 1.0.0, rm-box 1.0.5, rm-payout-2026-11-11-r2 and this file produce text and branch IDs identical to the reference: 49 of 49.",
+  "integrity": "sha384-i6JcI+AwTUPZ8dpwm/tzbY6LzVoZXv7v74d6YQmf01R/bCe10TxlYpa1pwmGpHQo",
+  "sha256": "70c47aee30520126114d565d72636f38b44c744a1c977afa111ccc4a268cd566",
+  "usage": "<script src=\"https://gary832.github.io/retirementum-calc/rm-snapshot-1.0.1.js\" integrity=\"sha384-i6JcI+AwTUPZ8dpwm/tzbY6LzVoZXv7v74d6YQmf01R/bCe10TxlYpa1pwmGpHQo\" crossorigin=\"anonymous\"></script>"
+}

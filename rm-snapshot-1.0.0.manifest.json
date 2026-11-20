@@ -1,7 +1,7 @@
 {
   "file": "rm-snapshot-1.0.0.js",
   "version": "1.0.0",
-  "status": "release candidate (Snapshot v3.1 RC2), not yet loaded by the live funnel",
+  "status": "superseded by rm-snapshot 1.0.1; do not load",
   "copy_version": "2026-11-19 v3.1 RC2 (owner-approved by Gary Jensen, Nov 19, 2026)",
   "needs": [
     "rm-box 1.0.5 results: mode \"none\" and, unless the visitor chose Option A, mode \"essential\""

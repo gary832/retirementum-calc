@@ -1,0 +1,14 @@
+{
+  "file": "rm-snapshot-1.0.0.js",
+  "version": "1.0.0",
+  "status": "release candidate (Snapshot v3.1 RC2), not yet loaded by the live funnel",
+  "copy_version": "2026-11-19 v3.1 RC2 (owner-approved by Gary Jensen, Nov 19, 2026)",
+  "needs": [
+    "rm-box 1.0.5 results: mode \"none\" and, unless the visitor chose Option A, mode \"essential\""
+  ],
+  "change": "New. Display layer for the redesigned Retirement Snapshot: formatter (branch selection and display rounding rules R1-R5), the approved copy library, a page fragment with styles scoped to .rms, and Print / Save as PDF (US Letter print layout, details expanded and the rest of the page hidden while printing). Never changes engine values. API: RMSnapshot.build(base, comparison, ctx) and RMSnapshot.render(container, base, comparison, ctx, opt). ctx: firstName, priorities (A.confidence, A.confidence2), state, totalAssets, bookingAllowed, two, inputs (the rm-box answers), optionA, prelim, mixEstimated, quoteDates, asOfYear.",
+  "verified": "Run 2026-11-19: 49 engine-integrated households, 1,315 financial and branch assertions recomputed from raw rm-box fields: 0 failures (engine files hash-pinned; mismatch is fatal). Print: 165 checks across H1, H12, H20, E13 and Option A at 1280 px and 390 px, PDFs on US Letter: 0 failures. Browser parity: the 49 households run in Chromium through rm-calc 2.0.0, rm-payout-lookup 1.0.0, rm-box 1.0.5, rm-payout-2026-11-11-r2 and this file produce text and branch IDs identical to the reference: 49 of 49.",
+  "integrity": "sha384-RpyumzrW4YMHi0Us/K6IY8RIC04YWDRmxyOK5yR7Xgn0GHtEhDlifvGEa5ZzxkAP",
+  "sha256": "ddb332caf452cc903ea540eebafa7956e6551f951d59d0fd9724b34da6b85e9a",
+  "usage": "<script src=\"https://gary832.github.io/retirementum-calc/rm-snapshot-1.0.0.js\" integrity=\"sha384-RpyumzrW4YMHi0Us/K6IY8RIC04YWDRmxyOK5yR7Xgn0GHtEhDlifvGEa5ZzxkAP\" crossorigin=\"anonymous\"></script>"
+}
